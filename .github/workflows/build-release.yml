@@ -1,0 +1,37 @@
+name: Build and Release Standalone EXE
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger build on push tag e.g. v1.0.0
+
+permissions:
+  contents: write # Required to create release and upload asset files
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Compile Standalone Executable
+        run: |
+          node compile.js
+        shell: bash
+
+      - name: Create Release and Upload EXE
+        uses: softprops/action-gh-release@v2
+        with:
+          files: rpg-decrypter.exe
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
