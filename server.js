@@ -697,6 +697,7 @@ label {
 }
 
 input[type="text"] {
+  width: 100%;
   flex-grow: 1;
   background: rgba(8, 10, 22, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.1);
